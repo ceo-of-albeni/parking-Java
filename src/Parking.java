@@ -1,3 +1,4 @@
+import java.time.Duration;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -60,6 +61,36 @@ public class Parking {
                 continue;
             System.out.println("Госномер: " + cars[i].carNumber + "; Время заезда: " + dateTimeFormatter.format(cars[i].operation.checkInTime));
         }
+    }
+
+    public boolean checkOut(String carNumber) {
+        Car car = null;
+        int carIndex = -1;
+
+        for (int i = 0; i < cars.length; i++) {
+            if (cars[i] == null) {
+                continue;
+            }
+            if (cars[i].carNumber.equals(carNumber))
+                car = cars[i];
+                carIndex = i;
+        }
+
+        if( car == null) {
+            System.out.println("Ошибка: Автомобиль не найден!");
+        }
+
+        car.operation.checkOutTime = LocalTime.now();
+        car.operation.duration = (int) Math.ceil((double)Duration.between(car.operation.checkInTime, car.operation.checkOutTime).toHours());
+        car.operation.totalPrice = car.operation.duration * pricePerHour;
+
+        System.out.println("Время парковки: " + car.operation.duration + " ч. ");
+        System.out.println("Стоимость: " + car.operation.totalPrice + " сомов");
+
+        cars[carIndex] = null;
+
+        return true;
+
     }
 
 }

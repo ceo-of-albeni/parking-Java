@@ -25,9 +25,16 @@ public class Main {
                     System.out.print("Госномер автомобиля: ");
                     String carNumber = scan.next();
                     System.out.println(carNumber);
-                    parking.checkIn(carNumber);
+                    boolean result = parking.checkIn(carNumber);
+                    if (result)
+                        System.out.println("Автомобиль заехал!");
                     break;
                 case 2:
+                    System.out.print("Госномер автомобиля: ");
+                    carNumber = scan.next();
+                    result = parking.checkOut(carNumber);
+                    if (result)
+                        System.out.println("Автомобиль выехал!");
                     break;
                 case 3:
                     parking.printAllCars();
